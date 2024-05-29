@@ -1,19 +1,37 @@
 package com.aluracursos.desafio_literalura.models;
 
-import java.util.List;
+import jakarta.persistence.*;
 
+import java.util.List;
+import java.util.Map;
+
+@Entity
+@Table(name = "libros")
 public class Libros {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String titulo;
-    private String autor;
+
+    @ManyToOne
+    @JoinColumn(name = "autor_id")
+    private Autores autor;
+
+    @Column(name = "nombre_autor")
+    private String nombreAutor;
+
     private List<String> lenguajes;
     private double numeroDescargas;
 
-    public Libros(DatosLibros datosLibros, Autores autor) {
+    public Libros() {}
+
+    public Libros(DatosLibros datosLibros) {
         this.titulo = datosLibros.titulo();
-        this.autor = autor.getName();
         this.lenguajes = datosLibros.languages();
         this.numeroDescargas = datosLibros.numeroDescargas();
     }
+
+    public Libros(Datos datosLibros) {}
 
     public String getTitulo() {
         return titulo;
@@ -23,12 +41,20 @@ public class Libros {
         this.titulo = titulo;
     }
 
-    public String getAutor() {
+    public Autores getAutor() {
         return autor;
     }
 
-    public void setAutor(String autor) {
+    public void setAutor(Autores autor) {
         this.autor = autor;
+        this.nombreAutor = autor.getName();
+    }
+    public String getNombreAutor() {
+        return nombreAutor;
+    }
+
+    public void setNombreAutor(String nombreAutor) {
+        this.nombreAutor = nombreAutor;
     }
 
     public List<String> getLenguajes() {
