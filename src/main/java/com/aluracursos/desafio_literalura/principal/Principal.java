@@ -47,6 +47,9 @@ public class Principal {
                 case 3:
                     autoresRegistrados();
                     break;
+                case 4:
+                    autoresPorAño();
+                    break;
             }
 
         }
@@ -108,6 +111,16 @@ public class Principal {
     private void autoresRegistrados() {
         List<Autores> autores = autoresRepository.findAll();
         autores.stream()
+                .sorted(Comparator.comparing(Autores::getName))
+                .forEach(System.out::println);
+    }
+
+    private void autoresPorAño() {
+        System.out.println("Escribe el año en el que deseas buscar: ");
+        var año = teclado.nextInt();
+        teclado.nextLine();
+        List<Autores> autoresPorAño = autoresRepository.findByAñoNacimientoLessThanEqualAndAñoMuerteGreaterThanEqual(año, año);
+        autoresPorAño.stream()
                 .sorted(Comparator.comparing(Autores::getName))
                 .forEach(System.out::println);
     }
