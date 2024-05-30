@@ -1,7 +1,9 @@
 package com.aluracursos.desafio_literalura.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -15,7 +17,7 @@ public class Autores {
     private int añoMuerte;
 
     @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Libros> libros;
+    private List<Libros> libros = new ArrayList<>();
 
     public Autores(DatosAutores datosAutores) {
         this.name = datosAutores.nombreAutor();
@@ -24,7 +26,6 @@ public class Autores {
     }
 
     public Autores() {}
-
 
     public String getName() {
         return name;
@@ -48,5 +49,21 @@ public class Autores {
 
     public void setAñoMuerte(int añoMuerte) {
         this.añoMuerte = añoMuerte;
+    }
+
+    public List<Libros> getLibros() {
+        return libros;
+    }
+
+    public void setLibros(List<Libros> libros) {
+        this.libros = libros;
+    }
+
+    @Override
+    public String toString() {
+        return "Autor: " + name + "\n" +
+                "Fecha de nacimiento: " + añoNacimiento + "\n" +
+                "Fecha de fallecimiento: " + añoMuerte + "\n" +
+                "Libros: " + libros;
     }
 }

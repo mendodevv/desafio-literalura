@@ -1,14 +1,12 @@
 package com.aluracursos.desafio_literalura.principal;
 
 import com.aluracursos.desafio_literalura.models.*;
+import com.aluracursos.desafio_literalura.repositorio.IAutoresRepository;
 import com.aluracursos.desafio_literalura.repositorio.ILibrosRepository;
 import com.aluracursos.desafio_literalura.service.ConsumoApi;
 import com.aluracursos.desafio_literalura.service.ConvierteDatos;
-import com.aluracursos.desafio_literalura.service.IConvierteDatos;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class Principal {
     private Scanner teclado = new Scanner(System.in);
@@ -16,10 +14,12 @@ public class Principal {
     private ConvierteDatos conversor = new ConvierteDatos();
     private final static String URL_BASE = "https://gutendex.com/books/?search=";
 
-    private ILibrosRepository repositorio;
+    private IAutoresRepository autoresRepository;
+    private ILibrosRepository librosRepository;
 
-    public Principal(ILibrosRepository repository) {
-        this.repositorio = repository;
+    public Principal(IAutoresRepository autoresRepository, ILibrosRepository librosRepository) {
+        this.autoresRepository = autoresRepository;
+        this.librosRepository = librosRepository;
     }
 
     public void muestraElMenu () {
@@ -47,23 +47,50 @@ public class Principal {
     }
 
     private Datos getDatosLibros() {
-        Datos datosLibros = null;
-        try {
-            System.out.println("Escribe el libro que desea buscar: ");
-            var nombreLibro = teclado.nextLine();
-            var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "+"));
-            datosLibros = conversor.obtenerDatos(json, Datos.class);
-
-        } catch (Exception e) {
-            System.err.println("Error al obtener datos del libro: " + e.getMessage());
-        }
+        var nombreLibro = teclado.nextLine();
+        var json = consumoApi.obtenerDatos(URL_BASE + nombreLibro.replace(" ", "+"));
+        Datos datosLibros = conversor.obtenerDatos(json, Datos.class);
         return datosLibros;
     }
 
-    private void agregarLibros() {
-        Datos datosLibros = getDatosLibros();
-        Libros libro = new Libros(datosLibros);
-        libro = repositorio.save(libro);
-        System.out.println(datosLibros);
+    private Libros crearLibro(DatosLibros datosLibros, Autores autor) {
+        if (autor != null) {
+            return new Libros(datosLibros, autor);
+        } else {
+            System.out.println("El autor es null, no se puede crear el libro");
+            return null;
+        }
+    }
+
+    private  void agregarLibros() {
+        System.out.println("Escribe el libro que deseas buscar: ");
+        Datos datos = getDatosLibros();
+        if (!datos.resultados().isEmpty()) {
+            DatosLibros datosLibro = datos.resultados().get(0);
+            DatosAutores datosAutores = datosLibro.autor().get(0);
+            Libros libro = null;
+            Libros libroRepositorio = librosRepository.findByTitulo(datosLibro.titulo());
+            if (libroRepositorio != null) {
+                System.out.println("Este libro ya se encuentra en la base de datos");
+                System.out.println(libroRepositorio.toString());
+            } else {
+                Autores autorRepositorio = autoresRepository.findByNameIgnoreCase(datosLibro.autor().get(0).nombreAutor());
+                if (autorRepositorio != null) {
+//                    Autores autor = new Autores(datosAutores);
+//                    autor = autoresRepository.save(autor);
+                    libro = crearLibro(datosLibro, autorRepositorio);
+                    librosRepository.save(libro);
+                    System.out.println(libro);
+                } else {
+                    Autores autor = new Autores(datosAutores);
+                    autor = autoresRepository.save(autor);
+                    libro = crearLibro(datosLibro, autor);
+                    librosRepository.save(libro);
+                    System.out.println(libro);
+                }
+            }
+        } else {
+            System.out.println("El libro no existe en la API de Gutendex, ingresa otro");
+        }
     }
 }

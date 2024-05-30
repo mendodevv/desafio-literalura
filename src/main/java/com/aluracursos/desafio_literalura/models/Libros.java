@@ -2,6 +2,7 @@ package com.aluracursos.desafio_literalura.models;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,7 @@ public class Libros {
     private String titulo;
 
     @ManyToOne
-    @JoinColumn(name = "autor_id")
+    @JoinColumn(name = "autor_id", nullable = false)
     private Autores autor;
 
     @Column(name = "nombre_autor")
@@ -25,13 +26,14 @@ public class Libros {
 
     public Libros() {}
 
-    public Libros(DatosLibros datosLibros) {
+    public Libros(DatosLibros datosLibros, Autores autor) {
         this.titulo = datosLibros.titulo();
         this.lenguajes = datosLibros.languages();
         this.numeroDescargas = datosLibros.numeroDescargas();
+        this.nombreAutor = autor.getName();
+        this.autor = autor;
     }
 
-    public Libros(Datos datosLibros) {}
 
     public String getTitulo() {
         return titulo;
@@ -47,14 +49,6 @@ public class Libros {
 
     public void setAutor(Autores autor) {
         this.autor = autor;
-        this.nombreAutor = autor.getName();
-    }
-    public String getNombreAutor() {
-        return nombreAutor;
-    }
-
-    public void setNombreAutor(String nombreAutor) {
-        this.nombreAutor = nombreAutor;
     }
 
     public List<String> getLenguajes() {
@@ -71,5 +65,15 @@ public class Libros {
 
     public void setNumeroDescargas(double numeroDescargas) {
         this.numeroDescargas = numeroDescargas;
+    }
+
+    @Override
+    public String toString() {
+        return "******* LIBRO *******" + "\n" +
+                "Título: " + titulo + "\n" +
+                "Autor: " + nombreAutor + "\n" +
+                "Idioma: " + lenguajes + "\n" +
+                "Número de descargas: " + numeroDescargas + "\n" +
+                "**************************";
     }
 }
