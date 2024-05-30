@@ -59,11 +59,23 @@ public class Autores {
         this.libros = libros;
     }
 
+
     @Override
+    // Obtener solo el título de los libros
     public String toString() {
+        StringBuilder librosTitulos = new StringBuilder();
+        for (Libros libro : libros) {
+            librosTitulos.append(libro.getTitulo()).append(", ");
+        }
+
+        // Eliminar la última coma y espacio
+        if (librosTitulos.length() > 0) {
+            librosTitulos.setLength(librosTitulos.length() - 2);
+        }
+
         return "Autor: " + name + "\n" +
                 "Fecha de nacimiento: " + añoNacimiento + "\n" +
                 "Fecha de fallecimiento: " + añoMuerte + "\n" +
-                "Libros: " + libros + "\n";
+                "Libros: " + librosTitulos + "\n";
     }
 }
