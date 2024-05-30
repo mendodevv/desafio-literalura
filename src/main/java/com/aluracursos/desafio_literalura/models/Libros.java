@@ -74,6 +74,6 @@ public class Libros {
                 "Autor: " + nombreAutor + "\n" +
                 "Idioma: " + lenguajes + "\n" +
                 "Número de descargas: " + numeroDescargas + "\n" +
-                "**************************";
+                "**************************" + "\n";
     }
 }

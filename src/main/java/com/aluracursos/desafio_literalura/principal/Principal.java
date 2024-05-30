@@ -41,6 +41,12 @@ public class Principal {
                 case 1:
                     agregarLibros();
                     break;
+                case 2:
+                    librosRegistrados();
+                    break;
+                case 3:
+                    autoresRegistrados();
+                    break;
             }
 
         }
@@ -76,8 +82,6 @@ public class Principal {
             } else {
                 Autores autorRepositorio = autoresRepository.findByNameIgnoreCase(datosLibro.autor().get(0).nombreAutor());
                 if (autorRepositorio != null) {
-//                    Autores autor = new Autores(datosAutores);
-//                    autor = autoresRepository.save(autor);
                     libro = crearLibro(datosLibro, autorRepositorio);
                     librosRepository.save(libro);
                     System.out.println(libro);
@@ -92,5 +96,19 @@ public class Principal {
         } else {
             System.out.println("El libro no existe en la API de Gutendex, ingresa otro");
         }
+    }
+
+    private void librosRegistrados() {
+        List<Libros> libros = librosRepository.findAll();
+        libros.stream()
+                .sorted(Comparator.comparing(Libros::getTitulo))
+                .forEach(System.out::println);
+    }
+
+    private void autoresRegistrados() {
+        List<Autores> autores = autoresRepository.findAll();
+        autores.stream()
+                .sorted(Comparator.comparing(Autores::getName))
+                .forEach(System.out::println);
     }
 }

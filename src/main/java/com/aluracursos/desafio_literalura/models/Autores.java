@@ -64,6 +64,6 @@ public class Autores {
         return "Autor: " + name + "\n" +
                 "Fecha de nacimiento: " + añoNacimiento + "\n" +
                 "Fecha de fallecimiento: " + añoMuerte + "\n" +
-                "Libros: " + libros;
+                "Libros: " + libros + "\n";
     }
 }
