@@ -50,6 +50,9 @@ public class Principal {
                 case 4:
                     autoresPorAño();
                     break;
+                case 5:
+                    listarPorIdioma();
+                    break;
             }
 
         }
@@ -122,6 +125,22 @@ public class Principal {
         List<Autores> autoresPorAño = autoresRepository.findByAñoNacimientoLessThanEqualAndAñoMuerteGreaterThanEqual(año, año);
         autoresPorAño.stream()
                 .sorted(Comparator.comparing(Autores::getName))
+                .forEach(System.out::println);
+    }
+
+    private void listarPorIdioma() {
+        System.out.println("Escribe el idioma por el que deseas buscar: ");
+        String menu = """
+                es - Español
+                en - Inglés
+                fr - Francés
+                pt - Portugués
+                """;
+        System.out.println(menu);
+        var idioma = teclado.nextLine();
+        List<Libros> librosPorIdioma = librosRepository.findByLenguajesContaining(idioma);
+        librosPorIdioma.stream()
+                .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
     }
 }

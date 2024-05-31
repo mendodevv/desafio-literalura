@@ -3,6 +3,7 @@ package com.aluracursos.desafio_literalura.models;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -21,14 +22,15 @@ public class Libros {
     @Column(name = "nombre_autor")
     private String nombreAutor;
 
-    private List<String> lenguajes;
+    @Column(name = "lenguajes")
+    private String lenguajes;
     private double numeroDescargas;
 
     public Libros() {}
 
     public Libros(DatosLibros datosLibros, Autores autor) {
         this.titulo = datosLibros.titulo();
-        this.lenguajes = datosLibros.languages();
+        setLenguajes(datosLibros.languages());
         this.numeroDescargas = datosLibros.numeroDescargas();
         this.nombreAutor = autor.getName();
         this.autor = autor;
@@ -52,11 +54,11 @@ public class Libros {
     }
 
     public List<String> getLenguajes() {
-        return lenguajes;
+        return Arrays.asList(lenguajes.split(","));
     }
 
     public void setLenguajes(List<String> lenguajes) {
-        this.lenguajes = lenguajes;
+        this.lenguajes = String.join(",", lenguajes);
     }
 
     public double getNumeroDescargas() {
