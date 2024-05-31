@@ -112,6 +112,10 @@ public class Principal {
 
     private void librosRegistrados() {
         List<Libros> libros = librosRepository.findAll();
+        if (libros.isEmpty()) {
+            System.out.println("No hay libros registrados");
+            return;
+        }
         libros.stream()
                 .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
@@ -119,6 +123,10 @@ public class Principal {
 
     private void autoresRegistrados() {
         List<Autores> autores = autoresRepository.findAll();
+        if (autores.isEmpty()) {
+            System.out.println("No hay autores registrados");
+            return;
+        }
         autores.stream()
                 .sorted(Comparator.comparing(Autores::getName))
                 .forEach(System.out::println);
@@ -128,7 +136,15 @@ public class Principal {
         System.out.println("Escribe el año en el que deseas buscar: ");
         var año = teclado.nextInt();
         teclado.nextLine();
+        if(año < 0) {
+            System.out.println("El año no puede ser negativo, intenta de nuevo");
+            return;
+        }
         List<Autores> autoresPorAño = autoresRepository.findByAñoNacimientoLessThanEqualAndAñoMuerteGreaterThanEqual(año, año);
+        if (autoresPorAño.isEmpty()) {
+            System.out.println("No hay autores registrados en ese año");
+            return;
+        }
         autoresPorAño.stream()
                 .sorted(Comparator.comparing(Autores::getName))
                 .forEach(System.out::println);
@@ -144,7 +160,15 @@ public class Principal {
                 """;
         System.out.println(menu);
         var idioma = teclado.nextLine();
+        if (!idioma.equals("es") && !idioma.equals("en") && !idioma.equals("fr") && !idioma.equals("pt")) {
+            System.out.println("Idioma no válido, intenta de nuevo");
+            return;
+        }
         List<Libros> librosPorIdioma = librosRepository.findByLenguajesContaining(idioma);
+        if (librosPorIdioma.isEmpty()) {
+            System.out.println("No hay libros registrados en ese idioma");
+            return;
+        }
         librosPorIdioma.stream()
                 .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
