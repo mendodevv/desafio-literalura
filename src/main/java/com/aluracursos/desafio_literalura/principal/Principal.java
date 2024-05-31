@@ -28,7 +28,7 @@ public class Principal {
             var menu = """
                     1 - Buscar libros por título
                     2 - Listar libros registrados
-                    3 - Listar libros registrados
+                    3 - Listar autores registrados
                     4 - Listar autores vivos en un determinado año
                     5 - Listar libros por idioma
                     0 - Salir
@@ -53,6 +53,12 @@ public class Principal {
                 case 5:
                     listarPorIdioma();
                     break;
+                    case 0:
+                        System.out.println("Cerrando aplicación...");
+                        break;
+
+                default:
+                    System.out.println("Opción no válida, intenta de nuevo");
             }
 
         }
