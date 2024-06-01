@@ -52,3 +52,6 @@ Asimismo, contamos con:
 
 ## Organización del código de manera gráfica
 ![desafio_literalura_diagrama](https://github.com/mendodevv/desafio-literalura/assets/129572136/f83dc1b0-3fe2-4a1e-8505-504eb7a465cb)
+
+## Demostración de la aplicación
+
