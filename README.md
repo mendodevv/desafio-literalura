@@ -102,6 +102,49 @@ Asimismo, contamos con:
   </tr>
 </table>
 
+## Como usar la aplicación
+**Clonar el repositorio**
+
+Para empezar, necesitas clonar el repositorio en tu máquina local. Puedes hacerlo utilizando el siguiente comando en tu terminal:
+   `git clone https://github.com/mendodevv/desafio-literalura.git`
+   
+O si lo prefieres, puedes presionar el botón verde `code<>` del repositorio y descargar los archivos como ZIP
+
+1. Configurar la base de datos
+
+La aplicación utiliza una base de datos PostgreSQL. Deberás crear una base de datos local y configurar las credenciales de la base de datos en el archivo src/main/resources/application.properties. Reemplaza ${DB_HOST}, ${DB_NAME_LITERALURA} ${DB_USER} y ${DB_PASSWORD} con tus propios valores (Puede ser en el mismo archivo properties, o creando tus propias variables de entorno).
+- DB_HOST: el nombre de tu host (si la base de datos está en tu computadora, pon localhost).
+- DB_NAME_LITERALURA: el nombre de tu base de datos.
+- DB_USER: el nombre del usuario de la base datos (por default, postgres pondrá el nombre de "postgre").
+- DB_PASSWORD: la contraseña que pusiste para postgreSQL
+
+2. Compilar y ejecutar la aplicación
+
+La aplicación utiliza Maven para la gestión de dependencias. Puedes compilar y ejecutar la aplicación utilizando los siguientes comandos en tu terminal:  <pre>cd desafio-literalura mvn clean install mvn spring-boot:run </pre> Esto compilará la aplicación y la iniciará.
+Asimismo, si prefieres ejecutarla desde un IDE como IntelliJ por ejemplo, solo tienes que abrir el proyecto y correr la clase DesafioLiteraluraApplication.
+
+3. Interactuar con la aplicación
+
+Una vez que la aplicación esté en ejecución, puedes interactuar con ella a través de la consola. Se te presentará un menú con varias opciones para buscar libros, listar libros y autores registrados, listar autores vivos en un determinado año, listar libros por idioma, ver los 10 libros más descargados y obtener estadísticas.  Simplemente sigue las instrucciones en pantalla para interactuar con la aplicación.
+
+## Tecnologías utilizadas
+- Java SE17
+- Maven
+- Spring Boot V3.3.0
+- Para el desarrollo del código, se usó el IDE IntelliJ
+- Para la base de datos, se usó PostgreSQL
+
+## Estado del proyecto
+
+Finalizado.
+
+
+
+
+
+
+
+
 
 
 
