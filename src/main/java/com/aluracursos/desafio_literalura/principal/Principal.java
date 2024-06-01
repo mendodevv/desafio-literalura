@@ -7,6 +7,7 @@ import com.aluracursos.desafio_literalura.service.ConsumoApi;
 import com.aluracursos.desafio_literalura.service.ConvierteDatos;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
     private Scanner teclado = new Scanner(System.in);
@@ -31,7 +32,9 @@ public class Principal {
                     3 - Listar autores registrados
                     4 - Listar autores vivos en un determinado año
                     5 - Listar libros por idioma
+                    6 - Top 10 libros más descargados
                     0 - Salir
+                  
                     """;
             System.out.println(menu);
             opcion = teclado.nextInt();
@@ -52,6 +55,9 @@ public class Principal {
                     break;
                 case 5:
                     listarPorIdioma();
+                    break;
+                case 6:
+                    topDiezLibros();
                     break;
                     case 0:
                         System.out.println("Cerrando aplicación...");
@@ -173,4 +179,23 @@ public class Principal {
                 .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
     }
+
+    private void topDiezLibros() {
+        var json = consumoApi.obtenerDatos(URL_BASE);
+        Datos datos = conversor.obtenerDatos(json, Datos.class);
+        List<Libros> libros = new ArrayList<>();
+        for (DatosLibros datosLibros : datos.resultados()) {
+            Autores autor = new Autores(datosLibros.autor().get(0));
+            Libros libro = new Libros(datosLibros, autor);
+            libros.add(libro);
+        }
+        libros.stream()
+            .sorted(Comparator.comparing(Libros::getNumeroDescargas).reversed())
+            .limit(10)
+            .forEach(System.out::println);
+    }
 }
+
+
+
+
