@@ -58,10 +58,52 @@ Asimismo, contamos con:
 [![Video demostración de la aplicación](https://img.youtube.com/vi/haLSyWFrgFM/0.jpg)](https://www.youtube.com/watch?v=haLSyWFrgFM)
 
 ### General Overview
-- Menú:
-<p align="left">
-  <img src="menu.png" alt="Menú del programa" style="width: 45%;">
-</p>
+<table>
+  <tr>
+    <td>
+      <p>Menú: muestra las opciones a elegir por el usuario</p>
+      <img src="readme-images/menu.png" alt="Menú del programa" width="400"/>
+    </td>
+    <td>
+      <p>Opción 1: buscar libros por título en la API de Gutendex</p>
+      <img src="readme-images/opcion1.png" alt="Opción 1" width="400"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>Opción 2: listar libros registrados</p>
+      <img src="readme-images/opcion2.png" alt="Opción 2" width="400"/>
+    </td>
+    <td>
+      <p>Opción 3: listar autores registrados</p>
+      <img src="readme-images/opcion3.png" alt="Opción 3" width="400"/>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>Opción 4: listar autores vivos en un determinado año</p>
+      <img src="readme-images/opcion4.png" alt="Opción 4" width="400"/>
+    </td>
+    <td>
+      <p>Opción 5: listar libros por idioma</p>
+      <img src="readme-images/opcion5.png" alt="Opción 5" width="400"/>
+    </td>
+  </tr>
+  </tr>
+  <tr>
+    <td>
+      <p>Opción 6: Mostrar top 10 libros por deescargas de la API o de la base de datos</p>
+      <img src="readme-images/opcion6.png" alt="Opción 6" width="400"/>
+    </td>
+    <td>
+      <p>Opción 7: mostrar estadísitcas</p>
+      <img src="readme-images/opcion7.png" alt="Opción 7" width="400"/>
+    </td>
+  </tr>
+</table>
+
+
+
 
 
 
