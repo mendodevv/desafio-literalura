@@ -138,6 +138,10 @@ Una vez que la aplicación esté en ejecución, puedes interactuar con ella a tr
 
 Finalizado.
 
+## Licensias
+
+MIT License.
+
 
 
 
