@@ -73,7 +73,8 @@ public class Autores {
             librosTitulos.setLength(librosTitulos.length() - 2);
         }
 
-        return "Autor: " + name + "\n" +
+        return  "--------------- AUTOR 👨‍🏫 ---------------" + "\n" +
+                "Autor: " + name + "\n" +
                 "Fecha de nacimiento: " + añoNacimiento + "\n" +
                 "Fecha de fallecimiento: " + añoMuerte + "\n" +
                 "Libros: " + librosTitulos + "\n";

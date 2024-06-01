@@ -25,16 +25,17 @@ public class Principal {
 
     public void muestraElMenu () {
         var opcion = -1;
+        System.out.println("Bienvenido! Por favor selecciona una opción: ");
         while (opcion != 0) {
             var menu = """
-                    1 - Buscar libros por título
-                    2 - Listar libros registrados
-                    3 - Listar autores registrados
-                    4 - Listar autores vivos en un determinado año
-                    5 - Listar libros por idioma
-                    6 - Top 10 libros más descargados
-                    7 - Obtener estadísiticas
-                    0 - Salir
+                    1 - | Buscar libros por título | 📕
+                    2 - | Listar libros registrados | ✍️
+                    3 - | Listar autores registrados | 👨‍🏫
+                    4 - | Listar autores vivos en un determinado año | ⌛
+                    5 - | Listar libros por idioma | ℹ️
+                    6 - | Top 10 libros más descargados | 🔝
+                    7 - | Obtener estadísiticas | 📊
+                    0 - | Salir | 👋
                     """;
             System.out.println(menu);
             opcion = teclado.nextInt();
@@ -105,12 +106,14 @@ public class Principal {
                 if (autorRepositorio != null) {
                     libro = crearLibro(datosLibro, autorRepositorio);
                     librosRepository.save(libro);
+                    System.out.println("----- LIBRO AGREGADO -----\n");
                     System.out.println(libro);
                 } else {
                     Autores autor = new Autores(datosAutores);
                     autor = autoresRepository.save(autor);
                     libro = crearLibro(datosLibro, autor);
                     librosRepository.save(libro);
+                    System.out.println("----- LIBRO AGREGADO -----\n");
                     System.out.println(libro);
                 }
             }
@@ -125,6 +128,7 @@ public class Principal {
             System.out.println("No hay libros registrados");
             return;
         }
+        System.out.println("----- LOS LIBROS REGISTRADOS SON: -----\n");
         libros.stream()
                 .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
@@ -136,6 +140,7 @@ public class Principal {
             System.out.println("No hay autores registrados");
             return;
         }
+        System.out.println("----- LOS AUTORES REGISTRADOS SON: -----\n");
         autores.stream()
                 .sorted(Comparator.comparing(Autores::getName))
                 .forEach(System.out::println);
@@ -154,6 +159,7 @@ public class Principal {
             System.out.println("No hay autores registrados en ese año");
             return;
         }
+        System.out.println("----- LOS AUTORES VIVOS REGISTRADOS EN EL AÑO " + año + " SON: -----\n");
         autoresPorAño.stream()
                 .sorted(Comparator.comparing(Autores::getName))
                 .forEach(System.out::println);
@@ -178,6 +184,7 @@ public class Principal {
             System.out.println("No hay libros registrados en ese idioma");
             return;
         }
+        System.out.println("----- LOS LIBROS REGISTRADOS EN EL IDIOMA SELECCIONADO SON: -----\n");
         librosPorIdioma.stream()
                 .sorted(Comparator.comparing(Libros::getTitulo))
                 .forEach(System.out::println);
@@ -194,6 +201,7 @@ public class Principal {
         teclado.nextLine();
 
         if (opcion == 1) {
+            System.out.println("----- LOS 10 LIBROS MÁS DESCARGADOS EN GUTENDEX SON: -----\n");
             var json = consumoApi.obtenerDatos(URL_BASE);
             Datos datos = conversor.obtenerDatos(json, Datos.class);
             List<Libros> libros = new ArrayList<>();
@@ -207,6 +215,7 @@ public class Principal {
                     .limit(10)
                     .forEach(System.out::println);
         } else if (opcion == 2) {
+            System.out.println("----- LOS 10 LIBROS MÁS DESCARGADOS EN LA BASE DE DATOS SON: -----\n");
             List<Libros> libros = librosRepository.findAll();
             if (libros.isEmpty()) {
                 System.out.println("No hay libros registrados");
@@ -222,7 +231,7 @@ public class Principal {
     }
 
     private void estaditicasApi() {
-        System.out.println("De donde quieres obtener las estadísiticas)");
+        System.out.println("De donde quieres obtener las estadísiticas: ");
         String menu = """
                 1 - Gutendex
                 2 - Base de datos
@@ -232,14 +241,17 @@ public class Principal {
         teclado.nextLine();
 
         if (opcion == 1) {
+            System.out.println("----- ESTADÍSTICAS DE DESCARGAS EN GUTENDEX -----\n");
             var json = consumoApi.obtenerDatos(URL_BASE);
             Datos datos = conversor.obtenerDatos(json, Datos.class);
             DoubleSummaryStatistics estadisticas = datos.resultados().stream()
                     .collect(Collectors.summarizingDouble(DatosLibros::numeroDescargas));
-            System.out.println("Libro con más descargas: " + estadisticas.getMax());
-            System.out.println("Libro con menos descargas: " + estadisticas.getMin());
-            System.out.println("Promedio de descargas: " + estadisticas.getAverage());
+            System.out.println("📈 Libro con más descargas: " + estadisticas.getMax());
+            System.out.println("📉 Libro con menos descargas: " + estadisticas.getMin());
+            System.out.println("📊 Promedio de descargas: " + estadisticas.getAverage());
+            System.out.println("\n");
         } else if (opcion == 2) {
+            System.out.println("----- ESTADÍSTICAS DE DESCARGAS EN LA BASE DE DATOS -----\n");
             List<Libros> libros = librosRepository.findAll();
             if (libros.isEmpty()) {
                 System.out.println("No hay libros registrados");
@@ -247,9 +259,10 @@ public class Principal {
             }
             DoubleSummaryStatistics estadisticas = libros.stream()
                     .collect(Collectors.summarizingDouble(Libros::getNumeroDescargas));
-            System.out.println("Libro con más descargas: " + estadisticas.getMax());
-            System.out.println("Libro con menos descargas: " + estadisticas.getMin());
-            System.out.println("Promedio de descargas: " + estadisticas.getAverage());
+            System.out.println("📈 Libro con más descargas: " + estadisticas.getMax());
+            System.out.println("📉 Libro con menos descargas: " + estadisticas.getMin());
+            System.out.println("📊 Promedio de descargas: " + estadisticas.getAverage());
+            System.out.println("\n");
         } else {
             System.out.println("Opción no válida, intenta de nuevo");
         }

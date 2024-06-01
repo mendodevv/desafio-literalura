@@ -71,11 +71,11 @@ public class Libros {
 
     @Override
     public String toString() {
-        return "******* LIBRO *******" + "\n" +
+        return "--------------- LIBRO 📖 ---------------" + "\n" +
                 "Título: " + titulo + "\n" +
                 "Autor: " + nombreAutor + "\n" +
                 "Idioma: " + lenguajes + "\n" +
                 "Número de descargas: " + numeroDescargas + "\n" +
-                "**************************" + "\n";
+                "------------------------------------" + "\n";
     }
 }
